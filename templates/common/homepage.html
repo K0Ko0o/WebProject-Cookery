@@ -3,453 +3,488 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DeliciousBites - Delicious Recipes & Culinary Inspiration</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts: Inter & Playfair Display -->
+    <title>Simple Table - Minimalist & Delicious Recipes</title>
+    <!-- Google Font: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        brand: {
-                            50: '#fff7ed',
-                            100: '#ffedd5',
-                            500: '#f97316',
-                            600: '#ea580c',
-                            700: '#c2410c',
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        serif: ['Playfair Display', 'serif'],
-                    }
-                }
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ================= RESET & BASICS ================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #2d3748;
+            background-color: #faf9f6;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* ================= CONTAINER ================= */
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ================= HEADER / NAVBAR ================= */
+        .header {
+            background-color: #ffffff;
+            border-bottom: 1px solid #edf2f7;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #1a202c;
+            letter-spacing: -0.5px;
+        }
+
+        .logo span {
+            color: #e53e3e;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 28px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #4a5568;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #e53e3e;
+        }
+
+        /* Mobile Menu Toggle Button */
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #2d3748;
+        }
+
+        /* ================= HERO SECTION ================= */
+        .hero {
+            padding: 60px 0 50px;
+            text-align: center;
+            background-color: #ffffff;
+            border-bottom: 1px solid #edf2f7;
+        }
+
+        .hero-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            color: #718096;
+            max-width: 550px;
+            margin: 0 auto 30px;
+            font-weight: 400;
+        }
+
+        /* Search Bar */
+        .search-form {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+            border: 1px solid #cbd5e0;
+            border-radius: 30px;
+            overflow: hidden;
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
+            transition: border-color 0.2s ease;
+        }
+
+        .search-form:focus-within {
+            border-color: #e53e3e;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 14px 20px;
+            border: none;
+            outline: none;
+            font-size: 0.95rem;
+            color: #2d3748;
+        }
+
+        .search-button {
+            background-color: #e53e3e;
+            color: #ffffff;
+            border: none;
+            padding: 0 24px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .search-button:hover {
+            background-color: #c53030;
+        }
+
+        /* ================= FEATURED RECIPES SECTION ================= */
+        .main-content {
+            flex: 1;
+            padding: 50px 0;
+        }
+
+        .section-header {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #1a202c;
+        }
+
+        /* Recipe Grid Layout */
+        .recipe-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 28px;
+        }
+
+        /* Recipe Card */
+        .recipe-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .recipe-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+        }
+
+        .recipe-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background-color: #edf2f7;
+        }
+
+        .recipe-body {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .recipe-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+
+        .recipe-desc {
+            font-size: 0.9rem;
+            color: #718096;
+            margin-bottom: 20px;
+            flex: 1;
+        }
+
+        .recipe-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 14px;
+            border-top: 1px solid #edf2f7;
+        }
+
+        .cook-time {
+            font-size: 0.85rem;
+            color: #a0aec0;
+            font-weight: 500;
+        }
+
+        .btn-view {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #e53e3e;
+            padding: 6px 12px;
+            border-radius: 6px;
+            background-color: #fff5f5;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-view:hover {
+            background-color: #fed7d7;
+        }
+
+        /* ================= FOOTER ================= */
+        .footer {
+            background-color: #ffffff;
+            border-top: 1px solid #edf2f7;
+            padding: 30px 0;
+            margin-top: auto;
+        }
+
+        .footer-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 20px;
+            list-style: none;
+        }
+
+        .footer-links a {
+            font-size: 0.85rem;
+            color: #718096;
+            transition: color 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: #2d3748;
+        }
+
+        .copyright {
+            font-size: 0.85rem;
+            color: #a0aec0;
+        }
+
+        /* ================= RESPONSIVE STYLES ================= */
+        @media (max-width: 640px) {
+            .hero-title {
+                font-size: 1.8rem;
+            }
+
+            .hero-subtitle {
+                font-size: 0.95rem;
+            }
+
+            .mobile-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                width: 100%;
+                flex-direction: column;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                background-color: #ffffff;
+                border-bottom: 1px solid #edf2f7;
+                padding: 16px 20px;
+                gap: 16px;
+            }
+
+            .nav-links.show {
+                display: flex;
+            }
+
+            .search-form {
+                flex-direction: column;
+                border-radius: 12px;
+            }
+
+            .search-button {
+                padding: 12px;
+                width: 100%;
             }
         }
-    </script>
+    </style>
 </head>
-<body class="bg-orange-50/30 text-gray-800 font-sans antialiased flex flex-col min-h-screen">
+<body>
 
-    <!-- ================= HEADER / NAVIGATION ================= -->
-    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-orange-100 shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-20">
-                <!-- Brand Logo -->
-                <a href="#" class="flex items-center gap-3 group">
-                    <div class="w-10 h-10 rounded-full bg-brand-500 text-white flex items-center justify-center font-bold text-xl shadow-md group-hover:scale-105 transition-transform">
-                        <i class="fa-solid font-bold fa-utensils"></i>
-                    </div>
-                    <span class="font-serif text-2xl font-bold text-gray-900 tracking-tight">Delicious<span class="text-brand-500">Bites</span></span>
-                </a>
+    <!-- Header Navigation -->
+    <header class="header">
+        <div class="container nav-container">
+            <a href="#" class="logo">Simple<span>Table</span></a>
 
-                <!-- Desktop Navigation Links -->
-                <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-600">
-                    <a href="#" class="text-brand-600 font-semibold transition-colors">Home</a>
-                    <a href="#categories" class="hover:text-brand-500 transition-colors">Categories</a>
-                    <a href="#trending" class="hover:text-brand-500 transition-colors">Popular Recipes</a>
-                    <a href="#tips" class="hover:text-brand-500 transition-colors">Cooking Tips</a>
-                    <a href="#newsletter" class="hover:text-brand-500 transition-colors">Subscribe</a>
-                </nav>
+            <button class="mobile-toggle" id="menuToggle" aria-label="Toggle navigation">
+                &#9776;
+            </button>
 
-                <!-- Actions -->
-                <div class="hidden sm:flex items-center gap-4">
-                    <button class="p-2 text-gray-500 hover:text-brand-500 rounded-full hover:bg-orange-50 transition-colors">
-                        <i class="fa-solid fa-bookmark text-lg"></i>
-                    </button>
-                    <a href="#" class="bg-brand-500 hover:bg-brand-600 text-white font-medium px-5 py-2.5 rounded-full shadow-sm hover:shadow transition-all text-sm">
-                        Submit Recipe
-                    </a>
-                </div>
-
-                <!-- Mobile Menu Button -->
-                <div class="flex md:hidden">
-                    <button id="mobile-menu-btn" type="button" class="text-gray-600 hover:text-brand-500 focus:outline-none p-2" aria-label="Toggle menu">
-                        <i class="fa-solid fa-bars text-xl"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Mobile Menu Dropdown -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-gray-100 px-4 pt-2 pb-6 space-y-3">
-            <a href="#" class="block text-brand-600 font-semibold px-3 py-2 rounded-lg bg-orange-50">Home</a>
-            <a href="#categories" class="block text-gray-600 hover:text-brand-500 hover:bg-orange-50 px-3 py-2 rounded-lg transition-colors">Categories</a>
-            <a href="#trending" class="block text-gray-600 hover:text-brand-500 hover:bg-orange-50 px-3 py-2 rounded-lg transition-colors">Popular Recipes</a>
-            <a href="#tips" class="block text-gray-600 hover:text-brand-500 hover:bg-orange-50 px-3 py-2 rounded-lg transition-colors">Cooking Tips</a>
-            <a href="#newsletter" class="block text-gray-600 hover:text-brand-500 hover:bg-orange-50 px-3 py-2 rounded-lg transition-colors">Subscribe</a>
-            <div class="pt-2 border-t border-gray-100 flex flex-col gap-2">
-                <a href="#" class="w-full text-center bg-brand-500 hover:bg-brand-600 text-white font-medium py-2.5 rounded-full shadow-sm transition-colors text-sm">
-                    Submit Recipe
-                </a>
-            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#" class="active">Home</a></li>
+                <li><a href="#recipes">Recipes</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
         </div>
     </header>
 
-    <main class="flex-grow">
-        <!-- ================= HERO SECTION ================= -->
-        <section class="relative bg-gradient-to-b from-orange-100/50 via-orange-50/20 to-transparent py-16 lg:py-24 overflow-hidden">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                <div class="grid lg:grid-cols-12 gap-12 items-center">
-                    <!-- Left Hero Content -->
-                    <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
-                        <div class="inline-flex items-center gap-2 bg-orange-100/80 text-brand-700 px-3.5 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider">
-                            <i class="fa-solid fa-fire text-brand-500"></i> Over 5,000 Tested Recipes
-                        </div>
-                        <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
-                            Master the Art of <span class="text-brand-500 underline decoration-orange-300">Delicious</span> Home Cooking
-                        </h1>
-                        <p class="text-lg text-gray-600 max-w-2xl mx-auto lg:mx-0">
-                            Discover easy-to-follow recipes, step-by-step guides, and culinary inspiration crafted for beginners and seasoned chefs alike.
-                        </p>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1 class="hero-title">Delicious Recipes, Made Simple</h1>
+            <p class="hero-subtitle">Explore clean, uncomplicated recipes crafted with fresh ingredients for everyday home cooking.</p>
 
-                        <!-- Search Bar -->
-                        <div class="pt-4 max-w-xl mx-auto lg:mx-0">
-                            <form class="relative flex items-center shadow-lg rounded-full overflow-hidden bg-white border border-gray-200 focus-within:border-brand-500 transition-colors p-1.5">
-                                <i class="fa-solid fa-magnifying-glass text-gray-400 text-lg ml-4 mr-2"></i>
-                                <input type="text" placeholder="Search by ingredient, dish, or cuisine..." class="w-full bg-transparent text-gray-800 placeholder-gray-400 focus:outline-none px-2 py-2 text-sm sm:text-base">
-                                <button type="submit" class="bg-brand-500 hover:bg-brand-600 text-white font-medium px-6 py-3 rounded-full transition-colors text-sm flex items-center gap-2 shrink-0">
-                                    <span>Search</span>
-                                </button>
-                            </form>
-                            <!-- Search Tags -->
-                            <div class="flex flex-wrap items-center justify-center lg:justify-start gap-2 mt-4 text-xs text-gray-500">
-                                <span class="font-medium text-gray-700">Popular:</span>
-                                <a href="#" class="hover:text-brand-600 bg-white px-2.5 py-1 rounded-full border border-gray-200 hover:border-brand-300 transition-colors">Pasta</a>
-                                <a href="#" class="hover:text-brand-600 bg-white px-2.5 py-1 rounded-full border border-gray-200 hover:border-brand-300 transition-colors">Tacos</a>
-                                <a href="#" class="hover:text-brand-600 bg-white px-2.5 py-1 rounded-full border border-gray-200 hover:border-brand-300 transition-colors">Vegan</a>
-                                <a href="#" class="hover:text-brand-600 bg-white px-2.5 py-1 rounded-full border border-gray-200 hover:border-brand-300 transition-colors">30-Min Meals</a>
-                            </div>
-                        </div>
-                    </div>
+            <!-- Search Bar -->
+            <form class="search-form" onsubmit="event.preventDefault();">
+                <input type="text" class="search-input" placeholder="Search by ingredient or dish name...">
+                <button type="submit" class="search-button">Search</button>
+            </form>
+        </div>
+    </section>
 
-                    <!-- Right Hero Featured Image Card -->
-                    <div class="lg:col-span-5 relative">
-                        <div class="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white group">
-                            <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=800&q=80" alt="Delicious Grilled Meal" class="w-full h-[400px] object-cover group-hover:scale-105 transition-transform duration-500">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-
-                            <!-- Floating Badge -->
-                            <div class="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-full flex items-center gap-2 shadow text-xs font-semibold text-gray-800">
-                                <i class="fa-solid fa-crown text-amber-500"></i> Recipe of the Day
-                            </div>
-
-                            <!-- Recipe Info Overlay -->
-                            <div class="absolute bottom-6 left-6 right-6 text-white space-y-2">
-                                <h3 class="font-serif text-2xl font-bold">Honey Glazed Salmon Bowl</h3>
-                                <div class="flex items-center gap-4 text-xs text-gray-200">
-                                    <span><i class="fa-regular fa-clock mr-1"></i> 25 mins</span>
-                                    <span><i class="fa-solid fa-fire-flame-curved mr-1"></i> Easy</span>
-                                    <span class="text-amber-400 font-semibold"><i class="fa-solid fa-star mr-1"></i> 4.9</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    <!-- Main Content / Featured Recipes Grid -->
+    <main class="main-content" id="recipes">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Featured Recipes</h2>
             </div>
-        </section>
 
-        <!-- ================= FEATURED CATEGORIES ================= -->
-        <section id="categories" class="py-12 bg-white border-y border-orange-100">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
-                    <div>
-                        <span class="text-brand-600 font-semibold text-sm uppercase tracking-wider">Explore</span>
-                        <h2 class="font-serif text-3xl font-bold text-gray-900 mt-1">Recipe Categories</h2>
+            <div class="recipe-grid">
+
+                <!-- Recipe Card 1 -->
+                <article class="recipe-card">
+                    <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&q=80" alt="Avocado Salad Bowl" class="recipe-image">
+                    <div class="recipe-body">
+                        <h3 class="recipe-title">Avocado Salad Bowl</h3>
+                        <p class="recipe-desc">A refreshing salad bowl loaded with ripe avocado, crisp veggies, and a simple lemon drizzle.</p>
+                        <div class="recipe-footer">
+                            <span class="cook-time">⏱ 15 mins</span>
+                            <a href="#" class="btn-view">View Recipe</a>
+                        </div>
                     </div>
-                    <a href="#" class="text-brand-600 hover:text-brand-700 font-medium text-sm flex items-center gap-1 group">
-                        View All Categories <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
-                    </a>
-                </div>
+                </article>
 
-                <!-- Categories Grid -->
-                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-6">
-                    <!-- Category 1 -->
-                    <a href="#" class="group p-5 bg-orange-50/50 hover:bg-brand-500 rounded-2xl text-center border border-orange-100 transition-all duration-300 hover:shadow-lg flex flex-col items-center">
-                        <div class="w-14 h-14 bg-white group-hover:bg-white/20 rounded-full flex items-center justify-center text-brand-500 group-hover:text-white mb-3 text-2xl shadow-sm transition-colors">
-                            <i class="fa-solid fa-egg"></i>
+                <!-- Recipe Card 2 -->
+                <article class="recipe-card">
+                    <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=600&q=80" alt="Margherita Pizza" class="recipe-image">
+                    <div class="recipe-body">
+                        <h3 class="recipe-title">Classic Margherita Pizza</h3>
+                        <p class="recipe-desc">Traditional thin crust topped with sweet tomato sauce, fresh mozzarella, and basil leaves.</p>
+                        <div class="recipe-footer">
+                            <span class="cook-time">⏱ 30 mins</span>
+                            <a href="#" class="btn-view">View Recipe</a>
                         </div>
-                        <h3 class="font-semibold text-gray-800 group-hover:text-white text-base">Breakfast</h3>
-                        <p class="text-xs text-gray-500 group-hover:text-orange-100 mt-1">120+ Recipes</p>
-                    </a>
+                    </div>
+                </article>
 
-                    <!-- Category 2 -->
-                    <a href="#" class="group p-5 bg-orange-50/50 hover:bg-brand-500 rounded-2xl text-center border border-orange-100 transition-all duration-300 hover:shadow-lg flex flex-col items-center">
-                        <div class="w-14 h-14 bg-white group-hover:bg-white/20 rounded-full flex items-center justify-center text-brand-500 group-hover:text-white mb-3 text-2xl shadow-sm transition-colors">
-                            <i class="fa-solid fa-bowl-rice"></i>
+                <!-- Recipe Card 3 -->
+                <article class="recipe-card">
+                    <img src="https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?auto=format&fit=crop&w=600&q=80" alt="Berry Tart" class="recipe-image">
+                    <div class="recipe-body">
+                        <h3 class="recipe-title">Summer Berry Tart</h3>
+                        <p class="recipe-desc">Light and flaky pastry shell filled with vanilla cream and topped with fresh seasonal berries.</p>
+                        <div class="recipe-footer">
+                            <span class="cook-time">⏱ 45 mins</span>
+                            <a href="#" class="btn-view">View Recipe</a>
                         </div>
-                        <h3 class="font-semibold text-gray-800 group-hover:text-white text-base">Main Dishes</h3>
-                        <p class="text-xs text-gray-500 group-hover:text-orange-100 mt-1">340+ Recipes</p>
-                    </a>
+                    </div>
+                </article>
 
-                    <!-- Category 3 -->
-                    <a href="#" class="group p-5 bg-orange-50/50 hover:bg-brand-500 rounded-2xl text-center border border-orange-100 transition-all duration-300 hover:shadow-lg flex flex-col items-center">
-                        <div class="w-14 h-14 bg-white group-hover:bg-white/20 rounded-full flex items-center justify-center text-brand-500 group-hover:text-white mb-3 text-2xl shadow-sm transition-colors">
-                            <i class="fa-solid fa-cake-candles"></i>
+                <!-- Recipe Card 4 -->
+                <article class="recipe-card">
+                    <img src="https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=600&q=80" alt="Creamy Garlic Pasta" class="recipe-image">
+                    <div class="recipe-body">
+                        <h3 class="recipe-title">Creamy Garlic Pasta</h3>
+                        <p class="recipe-desc">A quick weeknight pasta tossed in a rich parmesan garlic cream sauce and cracked black pepper.</p>
+                        <div class="recipe-footer">
+                            <span class="cook-time">⏱ 20 mins</span>
+                            <a href="#" class="btn-view">View Recipe</a>
                         </div>
-                        <h3 class="font-semibold text-gray-800 group-hover:text-white text-base">Desserts</h3>
-                        <p class="text-xs text-gray-500 group-hover:text-orange-100 mt-1">210+ Recipes</p>
-                    </a>
+                    </div>
+                </article>
 
-                    <!-- Category 4 -->
-                    <a href="#" class="group p-5 bg-orange-50/50 hover:bg-brand-500 rounded-2xl text-center border border-orange-100 transition-all duration-300 hover:shadow-lg flex flex-col items-center">
-                        <div class="w-14 h-14 bg-white group-hover:bg-white/20 rounded-full flex items-center justify-center text-brand-500 group-hover:text-white mb-3 text-2xl shadow-sm transition-colors">
-                            <i class="fa-solid fa-seedling"></i>
+                <!-- Recipe Card 5 -->
+                <article class="recipe-card">
+                    <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=600&q=80" alt="Roasted Veggie Salad" class="recipe-image">
+                    <div class="recipe-body">
+                        <h3 class="recipe-title">Roasted Veggie Bowl</h3>
+                        <p class="recipe-desc">Warm oven-roasted sweet potatoes, chickpeas, and broccoli served over fluff quinoa.</p>
+                        <div class="recipe-footer">
+                            <span class="cook-time">⏱ 35 mins</span>
+                            <a href="#" class="btn-view">View Recipe</a>
                         </div>
-                        <h3 class="font-semibold text-gray-800 group-hover:text-white text-base">Vegetarian</h3>
-                        <p class="text-xs text-gray-500 group-hover:text-orange-100 mt-1">180+ Recipes</p>
-                    </a>
+                    </div>
+                </article>
 
-                    <!-- Category 5 -->
-                    <a href="#" class="group p-5 bg-orange-50/50 hover:bg-brand-500 rounded-2xl text-center border border-orange-100 transition-all duration-300 hover:shadow-lg flex flex-col items-center">
-                        <div class="w-14 h-14 bg-white group-hover:bg-white/20 rounded-full flex items-center justify-center text-brand-500 group-hover:text-white mb-3 text-2xl shadow-sm transition-colors">
-                            <i class="fa-solid fa-martini-glass-citrus"></i>
+                <!-- Recipe Card 6 -->
+                <article class="recipe-card">
+                    <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=600&q=80" alt="Grilled Chicken Skewers" class="recipe-image">
+                    <div class="recipe-body">
+                        <h3 class="recipe-title">Herb Grilled Skewers</h3>
+                        <p class="recipe-desc">Tender marinated chicken and colorful bell peppers grilled to smoky perfection.</p>
+                        <div class="recipe-footer">
+                            <span class="cook-time">⏱ 25 mins</span>
+                            <a href="#" class="btn-view">View Recipe</a>
                         </div>
-                        <h3 class="font-semibold text-gray-800 group-hover:text-white text-base">Drinks</h3>
-                        <p class="text-xs text-gray-500 group-hover:text-orange-100 mt-1">95+ Recipes</p>
-                    </a>
+                    </div>
+                </article>
 
-                    <!-- Category 6 -->
-                    <a href="#" class="group p-5 bg-orange-50/50 hover:bg-brand-500 rounded-2xl text-center border border-orange-100 transition-all duration-300 hover:shadow-lg flex flex-col items-center">
-                        <div class="w-14 h-14 bg-white group-hover:bg-white/20 rounded-full flex items-center justify-center text-brand-500 group-hover:text-white mb-3 text-2xl shadow-sm transition-colors">
-                            <i class="fa-solid fa-stopwatch"></i>
-                        </div>
-                        <h3 class="font-semibold text-gray-800 group-hover:text-white text-base">Quick Meals</h3>
-                        <p class="text-xs text-gray-500 group-hover:text-orange-100 mt-1">150+ Recipes</p>
-                    </a>
-                </div>
             </div>
-        </section>
-
-        <!-- ================= TRENDING RECIPES ================= -->
-        <section id="trending" class="py-16">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center max-w-2xl mx-auto mb-12">
-                    <span class="text-brand-600 font-semibold text-sm uppercase tracking-wider">Top Picks</span>
-                    <h2 class="font-serif text-3xl sm:text-4xl font-bold text-gray-900 mt-1">Trending Recipes</h2>
-                    <p class="text-gray-600 mt-2 text-sm sm:text-base">Tried, tested, and loved by our community of food enthusiasts.</p>
-                </div>
-
-                <!-- Recipe Cards Grid -->
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Recipe Card 1 -->
-                    <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow border border-gray-100 flex flex-col group">
-                        <div class="relative overflow-hidden h-56">
-                            <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80" alt="Avocado Salad Bowl" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-                            <span class="absolute top-4 left-4 bg-emerald-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow">Healthy</span>
-                            <button class="absolute top-4 right-4 w-9 h-9 bg-white/90 hover:bg-white rounded-full flex items-center justify-center text-gray-600 hover:text-red-500 shadow transition-colors">
-                                <i class="fa-regular fa-heart"></i>
-                            </button>
-                        </div>
-                        <div class="p-6 flex-grow flex flex-col justify-between space-y-4">
-                            <div>
-                                <div class="flex items-center gap-2 text-amber-500 text-xs font-bold mb-2">
-                                    <i class="fa-solid fa-star"></i>
-                                    <span>4.9</span>
-                                    <span class="text-gray-400 font-normal">(128 reviews)</span>
-                                </div>
-                                <h3 class="font-serif text-xl font-bold text-gray-900 group-hover:text-brand-600 transition-colors">Fresh Avocado & Quinoa Buddha Bowl</h3>
-                                <p class="text-gray-600 text-sm mt-2 line-clamp-2">A colorful blend of crisp vegetables, fluffy quinoa, and creamy avocado dressing.</p>
-                            </div>
-                            <div class="pt-4 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500">
-                                <span class="flex items-center gap-1.5"><i class="fa-regular fa-clock text-brand-500"></i> 15 Min</span>
-                                <span class="flex items-center gap-1.5"><i class="fa-solid fa-gauge-high text-brand-500"></i> Easy</span>
-                                <span class="flex items-center gap-1.5"><i class="fa-solid fa-utensils text-brand-500"></i> 2 Servings</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Recipe Card 2 -->
-                    <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow border border-gray-100 flex flex-col group">
-                        <div class="relative overflow-hidden h-56">
-                            <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=800&q=80" alt="Artisan Pizza" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-                            <span class="absolute top-4 left-4 bg-brand-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow">Popular</span>
-                            <button class="absolute top-4 right-4 w-9 h-9 bg-white/90 hover:bg-white rounded-full flex items-center justify-center text-gray-600 hover:text-red-500 shadow transition-colors">
-                                <i class="fa-regular fa-heart"></i>
-                            </button>
-                        </div>
-                        <div class="p-6 flex-grow flex flex-col justify-between space-y-4">
-                            <div>
-                                <div class="flex items-center gap-2 text-amber-500 text-xs font-bold mb-2">
-                                    <i class="fa-solid fa-star"></i>
-                                    <span>4.8</span>
-                                    <span class="text-gray-400 font-normal">(240 reviews)</span>
-                                </div>
-                                <h3 class="font-serif text-xl font-bold text-gray-900 group-hover:text-brand-600 transition-colors">Classic Neapolitan Wood-Fired Pizza</h3>
-                                <p class="text-gray-600 text-sm mt-2 line-clamp-2">Authentic crispy crust topped with fresh mozzarella, San Marzano tomatoes, and basil.</p>
-                            </div>
-                            <div class="pt-4 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500">
-                                <span class="flex items-center gap-1.5"><i class="fa-regular fa-clock text-brand-500"></i> 40 Min</span>
-                                <span class="flex items-center gap-1.5"><i class="fa-solid fa-gauge-high text-brand-500"></i> Medium</span>
-                                <span class="flex items-center gap-1.5"><i class="fa-solid fa-utensils text-brand-500"></i> 4 Servings</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Recipe Card 3 -->
-                    <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow border border-gray-100 flex flex-col group">
-                        <div class="relative overflow-hidden h-56">
-                            <img src="https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?auto=format&fit=crop&w=800&q=80" alt="Berry Tart" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-                            <span class="absolute top-4 left-4 bg-purple-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow">Sweet</span>
-                            <button class="absolute top-4 right-4 w-9 h-9 bg-white/90 hover:bg-white rounded-full flex items-center justify-center text-gray-600 hover:text-red-500 shadow transition-colors">
-                                <i class="fa-regular fa-heart"></i>
-                            </button>
-                        </div>
-                        <div class="p-6 flex-grow flex flex-col justify-between space-y-4">
-                            <div>
-                                <div class="flex items-center gap-2 text-amber-500 text-xs font-bold mb-2">
-                                    <i class="fa-solid fa-star"></i>
-                                    <span>5.0</span>
-                                    <span class="text-gray-400 font-normal">(95 reviews)</span>
-                                </div>
-                                <h3 class="font-serif text-xl font-bold text-gray-900 group-hover:text-brand-600 transition-colors">Rustic Summer Berry Tart</h3>
-                                <p class="text-gray-600 text-sm mt-2 line-clamp-2">Buttery flaky crust filled with vanilla custard and decorated with fresh seasonal berries.</p>
-                            </div>
-                            <div class="pt-4 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500">
-                                <span class="flex items-center gap-1.5"><i class="fa-regular fa-clock text-brand-500"></i> 50 Min</span>
-                                <span class="flex items-center gap-1.5"><i class="fa-solid fa-gauge-high text-brand-500"></i> Medium</span>
-                                <span class="flex items-center gap-1.5"><i class="fa-solid fa-utensils text-brand-500"></i> 6 Servings</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ================= COOKING TIPS SECTION ================= -->
-        <section id="tips" class="py-16 bg-gradient-to-r from-amber-500 to-brand-600 text-white">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="grid lg:grid-cols-12 gap-12 items-center">
-                    <div class="lg:col-span-5 space-y-4">
-                        <span class="bg-white/20 text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">Chef Secrets</span>
-                        <h2 class="font-serif text-3xl sm:text-4xl font-bold leading-tight">Elevate Your Cooking with Quick Professional Tips</h2>
-                        <p class="text-orange-100 text-sm sm:text-base">Simple techniques that transform good dishes into restaurant-quality meals right at home.</p>
-                    </div>
-
-                    <div class="lg:col-span-7 grid sm:grid-cols-2 gap-6">
-                        <!-- Tip Item 1 -->
-                        <div class="bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/10 space-y-3">
-                            <div class="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center text-xl font-bold text-white">
-                                <i class="fa-solid fa-temperature-high"></i>
-                            </div>
-                            <h3 class="font-serif text-lg font-bold">Preheat Your Pans</h3>
-                            <p class="text-xs text-orange-100 leading-relaxed">Always heat your pan before adding oil or meat. This ensures crisp searing and prevents sticking.</p>
-                        </div>
-
-                        <!-- Tip Item 2 -->
-                        <div class="bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/10 space-y-3">
-                            <div class="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center text-xl font-bold text-white">
-                                <i class="fa-solid fa-mortar-pestle"></i>
-                            </div>
-                            <h3 class="font-serif text-lg font-bold">Season in Layers</h3>
-                            <p class="text-xs text-orange-100 leading-relaxed">Add salt in small amounts throughout cooking rather than all at the end for deeper flavor profile.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ================= NEWSLETTER SUBSCRIPTION ================= -->
-        <section id="newsletter" class="py-16 bg-white">
-            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <div class="bg-orange-50 rounded-3xl p-8 sm:p-12 border border-orange-100 shadow-sm space-y-6">
-                    <div class="w-16 h-16 bg-brand-500 text-white rounded-full flex items-center justify-center mx-auto text-2xl shadow-md">
-                        <i class="fa-regular fa-paper-plane"></i>
-                    </div>
-                    <div class="space-y-2">
-                        <h2 class="font-serif text-3xl font-bold text-gray-900">Get Weekly Recipe Inspiration</h2>
-                        <p class="text-gray-600 text-sm sm:text-base max-w-lg mx-auto">Join 20,000+ food lovers receiving curated recipes and cooking guides straight to their inbox.</p>
-                    </div>
-
-                    <!-- Subscription Form -->
-                    <form class="max-w-md mx-auto flex flex-col sm:flex-row gap-3">
-                        <input type="email" placeholder="Enter your email address..." class="w-full px-5 py-3 rounded-full border border-gray-200 focus:outline-none focus:border-brand-500 text-sm text-gray-800">
-                        <button type="submit" class="bg-brand-500 hover:bg-brand-600 text-white font-medium px-7 py-3 rounded-full transition-colors text-sm shrink-0 shadow">
-                            Subscribe
-                        </button>
-                    </form>
-                    <p class="text-xs text-gray-400">No spam ever. Unsubscribe with one click anytime.</p>
-                </div>
-            </div>
-        </section>
+        </div>
     </main>
 
-    <!-- ================= FOOTER ================= -->
-    <footer class="bg-gray-900 text-gray-400 pt-16 pb-12 border-t border-gray-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 mb-12">
-                <!-- Brand Info -->
-                <div class="lg:col-span-2 space-y-4">
-                    <a href="#" class="flex items-center gap-3">
-                        <div class="w-9 h-9 rounded-full bg-brand-500 text-white flex items-center justify-center font-bold text-lg">
-                            <i class="fa-solid fa-utensils"></i>
-                        </div>
-                        <span class="font-serif text-2xl font-bold text-white tracking-tight">Delicious<span class="text-brand-500">Bites</span></span>
-                    </a>
-                    <p class="text-sm text-gray-400 leading-relaxed max-w-sm">
-                        DeliciousBites brings foodies together to share, discover, and celebrate incredible culinary experiences from home kitchens around the globe.
-                    </p>
-                    <!-- Social Links -->
-                    <div class="flex items-center gap-4 text-gray-400 pt-2">
-                        <a href="#" class="w-9 h-9 bg-gray-800 hover:bg-brand-500 hover:text-white rounded-full flex items-center justify-center transition-colors"><i class="fa-brands fa-facebook-f"></i></a>
-                        <a href="#" class="w-9 h-9 bg-gray-800 hover:bg-brand-500 hover:text-white rounded-full flex items-center justify-center transition-colors"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="#" class="w-9 h-9 bg-gray-800 hover:bg-brand-500 hover:text-white rounded-full flex items-center justify-center transition-colors"><i class="fa-brands fa-pinterest-p"></i></a>
-                        <a href="#" class="w-9 h-9 bg-gray-800 hover:bg-brand-500 hover:text-white rounded-full flex items-center justify-center transition-colors"><i class="fa-brands fa-youtube"></i></a>
-                    </div>
-                </div>
-
-                <!-- Navigation Column 1 -->
-                <div>
-                    <h4 class="text-white font-semibold text-sm mb-4 uppercase tracking-wider">Quick Links</h4>
-                    <ul class="space-y-2.5 text-sm">
-                        <li><a href="#" class="hover:text-white transition-colors">About Us</a></li>
-                        <li><a href="#categories" class="hover:text-white transition-colors">All Categories</a></li>
-                        <li><a href="#trending" class="hover:text-white transition-colors">Popular Recipes</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Meal Plans</a></li>
-                    </ul>
-                </div>
-
-                <!-- Navigation Column 2 -->
-                <div>
-                    <h4 class="text-white font-semibold text-sm mb-4 uppercase tracking-wider">Support</h4>
-                    <ul class="space-y-2.5 text-sm">
-                        <li><a href="#" class="hover:text-white transition-colors">Contact Us</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">FAQ</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Privacy Policy</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Terms of Service</a></li>
-                    </ul>
-                </div>
-
-                <!-- Contact Info -->
-                <div>
-                    <h4 class="text-white font-semibold text-sm mb-4 uppercase tracking-wider">Get in Touch</h4>
-                    <ul class="space-y-3 text-sm">
-                        <li class="flex items-center gap-2.5"><i class="fa-regular fa-envelope text-brand-500"></i> hello@deliciousbites.com</li>
-                        <li class="flex items-center gap-2.5"><i class="fa-solid fa-phone text-brand-500"></i> +1 (555) 234-5678</li>
-                        <li class="flex items-start gap-2.5"><i class="fa-solid fa-location-dot text-brand-500 mt-1"></i> 100 Culinary Ave, Suite 400</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="pt-8 border-t border-gray-800 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-500 gap-4">
-                <p>&copy; 2026 DeliciousBites Inc. All rights reserved.</p>
-                <p>Crafted with <i class="fa-solid fa-heart text-red-500"></i> for food lovers everywhere.</p>
-            </div>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-container">
+            <ul class="footer-links">
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Terms of Use</a></li>
+                <li><a href="#">Contact Us</a></li>
+            </ul>
+            <p class="copyright">&copy; 2026 SimpleTable. All rights reserved.</p>
         </div>
     </footer>
 
-    <!-- Interactive Mobile Menu Toggle Script -->
+    <!-- Minimal JavaScript for mobile menu -->
     <script>
-        const menuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.getElementById('navLinks');
 
-        menuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('show');
         });
     </script>
 </body>
