@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 PROJECT_APPS = [
     'recipes',
     'ingredients',
+    'common',
 ]
 
 INSTALLED_APPS = [
