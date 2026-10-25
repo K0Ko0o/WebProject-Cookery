@@ -35,7 +35,7 @@
                         <p class="recipe-desc">{{ recipe.description|truncatewords:10 }}</p>
                         <div class="recipe-footer">
                             <span class="cook-time">⏱ {{ recipe.time }}</span>
-                            <a href="{% url 'recipe:detail' %}" class="btn-view">View Recipe</a>
+                            <a href="{% url 'recipe:detail' recipe.id %}" class="btn-view">View Recipe</a>
                         </div>
                     </div>
                 </article>
