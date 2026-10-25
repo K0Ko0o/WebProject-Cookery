@@ -26,6 +26,10 @@ def recipes_edit_view(request: HttpRequest, pk: int) -> HttpResponse:
     recipe = get_object_or_404(Recipe, id=pk)
     form = RecipeEditForm(request.POST or None, request.FILES or None, instance=recipe)
 
+    if form.is_valid():
+        form.save()
+        return redirect('recipe:detail', recipe.id)
+
     context = {
         'form': form
     }
