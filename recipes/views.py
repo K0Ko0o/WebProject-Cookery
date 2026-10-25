@@ -1,8 +1,9 @@
 from django.http.request import HttpRequest
 from django.http.response import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 
-from recipes.forms import RecipeCreateForm
+from recipes.forms import RecipeCreateForm, RecipeEditForm
+from recipes.models import Recipe
 
 
 def recipes_list_view(request: HttpRequest) -> HttpResponse:
@@ -21,11 +22,24 @@ def recipes_add_view(request: HttpRequest) -> HttpResponse:
 
     return render(request, 'recipes/recipe-add.html', context)
 
-def recipes_edit_view(request: HttpRequest) -> HttpResponse:
-    return render(request, 'recipes/recipe-edit.html')
+def recipes_edit_view(request: HttpRequest, pk: int) -> HttpResponse:
+    recipe = get_object_or_404(Recipe, id=pk)
+    form = RecipeEditForm(request.POST or None, request.FILES or None, instance=recipe)
+
+    context = {
+        'form': form
+    }
+
+    return render(request, 'recipes/recipe-edit.html', context)
 
 def recipes_delete_view(request: HttpRequest) -> HttpResponse:
     return render(request, 'recipes/recipe-delete.html')
 
-def recipes_detail_view(request: HttpRequest) -> HttpResponse:
-    return render(request, 'recipes/recipe-detail.html')
+def recipes_detail_view(request: HttpRequest, pk: int) -> HttpResponse:
+    recipe = Recipe.objects.prefetch_related('ingredients').get(id=pk)
+
+    context = {
+        "recipe": recipe
+    }
+
+    return render(request, 'recipes/recipe-detail.html', context)
