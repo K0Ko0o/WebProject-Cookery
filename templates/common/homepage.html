@@ -18,88 +18,28 @@
     <main class="main-content" id="recipes">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">Featured Recipes</h2>
+                <h2 class="section-title">Available Recipes {{ all_recipes.count }}</h2>
             </div>
 
             <div class="recipe-grid">
 
-                <!-- Recipe Card 1 -->
+                {% for recipe in all_recipes %}
                 <article class="recipe-card">
-                    <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&q=80" alt="Avocado Salad Bowl" class="recipe-image">
+                    {% if recipe.image %}
+                    <img src="{{ recipe.image.url }}" alt="{{ recipe.name }}" class="recipe-image">
+                    {% else %}
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQEVZcLvqNkkyIO7uQmZ6OQjc3Ckqnpsr5zrMKlDoLFLkLrZ9h94Nw4Fjm&s=10" alt="{{ recipe.name }}" class="recipe-image">
+                    {% endif %}
                     <div class="recipe-body">
-                        <h3 class="recipe-title">Avocado Salad Bowl</h3>
-                        <p class="recipe-desc">A refreshing salad bowl loaded with ripe avocado, crisp veggies, and a simple lemon drizzle.</p>
+                        <h3 class="recipe-title">{{ recipe.name }}</h3>
+                        <p class="recipe-desc">{{ recipe.description|truncatewords:10 }}</p>
                         <div class="recipe-footer">
-                            <span class="cook-time">⏱ 15 mins</span>
-                            <a href="#" class="btn-view">View Recipe</a>
+                            <span class="cook-time">⏱ {{ recipe.time }}</span>
+                            <a href="{% url 'recipe:detail' %}" class="btn-view">View Recipe</a>
                         </div>
                     </div>
                 </article>
-
-                <!-- Recipe Card 2 -->
-                <article class="recipe-card">
-                    <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=600&q=80" alt="Margherita Pizza" class="recipe-image">
-                    <div class="recipe-body">
-                        <h3 class="recipe-title">Classic Margherita Pizza</h3>
-                        <p class="recipe-desc">Traditional thin crust topped with sweet tomato sauce, fresh mozzarella, and basil leaves.</p>
-                        <div class="recipe-footer">
-                            <span class="cook-time">⏱ 30 mins</span>
-                            <a href="#" class="btn-view">View Recipe</a>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Recipe Card 3 -->
-                <article class="recipe-card">
-                    <img src="https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?auto=format&fit=crop&w=600&q=80" alt="Berry Tart" class="recipe-image">
-                    <div class="recipe-body">
-                        <h3 class="recipe-title">Summer Berry Tart</h3>
-                        <p class="recipe-desc">Light and flaky pastry shell filled with vanilla cream and topped with fresh seasonal berries.</p>
-                        <div class="recipe-footer">
-                            <span class="cook-time">⏱ 45 mins</span>
-                            <a href="#" class="btn-view">View Recipe</a>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Recipe Card 4 -->
-                <article class="recipe-card">
-                    <img src="https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=600&q=80" alt="Creamy Garlic Pasta" class="recipe-image">
-                    <div class="recipe-body">
-                        <h3 class="recipe-title">Creamy Garlic Pasta</h3>
-                        <p class="recipe-desc">A quick weeknight pasta tossed in a rich parmesan garlic cream sauce and cracked black pepper.</p>
-                        <div class="recipe-footer">
-                            <span class="cook-time">⏱ 20 mins</span>
-                            <a href="#" class="btn-view">View Recipe</a>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Recipe Card 5 -->
-                <article class="recipe-card">
-                    <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=600&q=80" alt="Roasted Veggie Salad" class="recipe-image">
-                    <div class="recipe-body">
-                        <h3 class="recipe-title">Roasted Veggie Bowl</h3>
-                        <p class="recipe-desc">Warm oven-roasted sweet potatoes, chickpeas, and broccoli served over fluff quinoa.</p>
-                        <div class="recipe-footer">
-                            <span class="cook-time">⏱ 35 mins</span>
-                            <a href="#" class="btn-view">View Recipe</a>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Recipe Card 6 -->
-                <article class="recipe-card">
-                    <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=600&q=80" alt="Grilled Chicken Skewers" class="recipe-image">
-                    <div class="recipe-body">
-                        <h3 class="recipe-title">Herb Grilled Skewers</h3>
-                        <p class="recipe-desc">Tender marinated chicken and colorful bell peppers grilled to smoky perfection.</p>
-                        <div class="recipe-footer">
-                            <span class="cook-time">⏱ 25 mins</span>
-                            <a href="#" class="btn-view">View Recipe</a>
-                        </div>
-                    </div>
-                </article>
+                {% endfor %}
 
             </div>
         </div>
