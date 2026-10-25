@@ -7,10 +7,11 @@
         </button>
 
         <ul class="nav-links" id="navLinks">
-            <li><a href="#" class="active">Home</a></li>
-            <li><a href="#recipes">Recipes</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li><a href="{% url 'common:homepage' %}" class="active">Home</a></li>
+            <li><a href="{% url 'recipe:list' %}">Recipes</a></li>
+            <li><a href="{% url 'ingredient:list' %}">Ingredients</a></li>
+            <li><a href="{% url 'recipe:create' %}">Add Recipe</a></li>
+            <li><a href="{% url 'ingredient:create' %}">Add Ingredient</a></li>
         </ul>
     </div>
 </header>
