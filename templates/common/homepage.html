@@ -39,6 +39,11 @@
                         </div>
                     </div>
                 </article>
+                {% empty %}
+                    <h2>No recipes found</h2>
+                    <p>Your recipe collection is currently empty. Get started by adding your first delicious recipe!</p>
+
+                    <a href="{% url 'recipe:create' %}" class="btn-create">+ Add Your First Recipe</a>
                 {% endfor %}
 
             </div>
