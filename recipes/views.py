@@ -7,7 +7,13 @@ from recipes.models import Recipe
 
 
 def recipes_list_view(request: HttpRequest) -> HttpResponse:
-    return render(request, 'recipes/recipes-list.html')
+    all_recipes = Recipe.objects.all()
+
+    context = {
+        "all_recipes": all_recipes
+    }
+
+    return render(request, 'recipes/recipes-list.html', context)
 
 def recipes_add_view(request: HttpRequest) -> HttpResponse:
     form = RecipeCreateForm(request.POST or None, request.FILES or None)
