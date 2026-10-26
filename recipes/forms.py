@@ -1,5 +1,6 @@
 from django import forms
 
+from djangoproject.mixins import DisabledForm
 from recipes.models import Recipe
 
 
@@ -14,5 +15,5 @@ class RecipeCreateForm(RecipeBasicForm):
 class RecipeEditForm(RecipeBasicForm):
     pass
 
-class RecipeDeleteForm(RecipeBasicForm):
+class RecipeDeleteForm(DisabledForm, RecipeBasicForm):
     pass
