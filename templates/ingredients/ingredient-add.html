@@ -8,7 +8,6 @@
                     <form method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                         {{ form|crispy }}
-                        <a href="{% url 'ingredient:create' %}" class="btn-create">Can't find the ingredient you need? Click here to add it!</a>
                         <button type="submit" class="btn btn-primary w-100 mt-3">Create Ingredient</button>
                     </form>
                 </div>

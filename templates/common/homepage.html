@@ -11,10 +11,6 @@
     <!-- Main Content / Featured Recipes Grid -->
     <main class="main-content" id="recipes">
         <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Available Recipes {{ all_recipes.count }}</h2>
-            </div>
-
             <div class="recipe-grid">
 
                 {% for recipe in all_recipes %}
@@ -22,7 +18,7 @@
                     {% if recipe.image %}
                     <img src="{{ recipe.image.url }}" alt="{{ recipe.name }}" class="recipe-image">
                     {% else %}
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQEVZcLvqNkkyIO7uQmZ6OQjc3Ckqnpsr5zrMKlDoLFLkLrZ9h94Nw4Fjm&s=10" alt="{{ recipe.name }}" class="recipe-image">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQEVZcLvqNkkyIO7uQmZ60Qjc3Ckqnpsr5zrMKlDoLFLkLrZ9h94Nw4Fjm&s=10" alt="{{ recipe.name }}" class="recipe-image">
                     {% endif %}
                     <div class="recipe-body">
                         <h3 class="recipe-title">{{ recipe.name }}</h3>
@@ -34,10 +30,12 @@
                     </div>
                 </article>
                 {% empty %}
-                    <h2>No recipes found</h2>
-                    <p>Your recipe collection is currently empty. Get started by adding your first delicious recipe!</p>
-
-                    <a href="{% url 'recipe:create' %}" class="btn-create">+ Add Your First Recipe</a>
+                    <!-- Wrapper that spans the full width of the grid and centers the content -->
+                    <div class="empty-state" style="grid-column: 1 / -1; text-align: center; padding: 4rem 1rem;">
+                        <h2 style="margin-bottom: 0.75rem; font-weight: bold;">No recipes found</h2>
+                        <p style="color: #64748b; margin-bottom: 1.5rem;">Your recipe collection is currently empty. Get started by adding your first delicious recipe!</p>
+                        <a href="{% url 'recipe:create' %}" class="btn-create" style="display: inline-block; padding: 0.75rem 1.5rem; background-color: #dc2626; color: white; border-radius: 6px; text-decoration: none; font-weight: 500;">+ Add Your First Recipe</a>
+                    </div>
                 {% endfor %}
 
             </div>
