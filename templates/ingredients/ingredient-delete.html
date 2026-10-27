@@ -1,1 +1,17 @@
 {% extends 'shared/base.html' %}
+{% load crispy_forms_filters %}
+{% block content %}
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow-sm p-4">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        <button type="submit" class="btn btn-primary w-100 mt-3">Delete Ingredient</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

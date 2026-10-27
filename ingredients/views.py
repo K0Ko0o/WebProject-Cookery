@@ -1,8 +1,10 @@
+from difflib import context_diff
+
 from django.http.request import HttpRequest
 from django.http.response import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 
-from ingredients.forms import IngredientSearchForm
+from ingredients.forms import IngredientSearchForm, IngredientCreateForm, IngredientEditForm, IngredientDeleteForm
 from ingredients.models import Ingredient
 
 
@@ -28,14 +30,52 @@ def ingredients_list_view(request: HttpRequest) -> HttpResponse:
     return render(request, 'ingredients/ingredients-list.html', context)
 
 def ingredients_add_view(request: HttpRequest) -> HttpResponse:
-    return render(request, 'ingredients/ingredient-add.html')
+    form = IngredientCreateForm(request.POST or None, request.FILES or None)
 
-def ingredients_edit_view(request: HttpRequest) -> HttpResponse:
-    return render(request, 'ingredients/ingredient-edit.html')
+    if form.is_valid():
+        form.save()
+        return redirect('common:homepage')
 
-def ingredients_delete_view(request: HttpRequest) -> HttpResponse:
-    return render(request, 'ingredients/ingredient-delete.html')
+    context = {
+        'form': form
+    }
 
-def ingredients_detail_view(request: HttpRequest) -> HttpResponse:
-    return render(request, 'ingredients/ingredient-detail.html')
+    return render(request, 'ingredients/ingredient-add.html', context)
+
+def ingredients_edit_view(request: HttpRequest, pk: int) -> HttpResponse:
+    ingredient = get_object_or_404(Ingredient, id=pk)
+    form = IngredientEditForm(request.POST or None, request.FILES or None, instance=ingredient)
+
+    if form.is_valid():
+        form.save()
+        return redirect('common:homepage')
+
+    context = {
+        'form': form
+    }
+
+    return render(request, 'ingredients/ingredient-edit.html', context)
+
+def ingredients_delete_view(request: HttpRequest, pk: int) -> HttpResponse:
+    ingredient = get_object_or_404(Ingredient, id=pk)
+    form = IngredientDeleteForm(request.POST or None, request.FILES or None, instance=ingredient)
+
+    if request.POST:
+        ingredient.delete()
+        return redirect('common:homepage')
+
+    context = {
+        'form': form
+    }
+
+    return render(request, 'ingredients/ingredient-edit.html', context)
+
+def ingredients_detail_view(request: HttpRequest, pk: int) -> HttpResponse:
+    ingredient = get_object_or_404(Ingredient, id=pk)
+
+    context = {
+        "ingredient": ingredient
+    }
+
+    return render(request, 'ingredients/ingredient-detail.html', context)
 

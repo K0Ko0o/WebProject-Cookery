@@ -1,1 +1,63 @@
 {% extends 'shared/base.html' %}
+{% block content %}
+
+<main class="main-content">
+    <div class="container">
+        
+        <!-- Back Button -->
+        <a href="{% url 'ingredient:list' %}" class="back-link" style="display: inline-block; margin-bottom: 1rem; color: #64748b; text-decoration: none;">
+            &larr; Back to Ingredients
+        </a>
+
+        <!-- Ingredient Container Card -->
+        <article class="ingredient-detail-card" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; padding: 2rem;">
+            
+            <!-- Ingredient Image -->
+            {% if ingredient.image %}
+                <img src="{{ ingredient.image.url }}" alt="{{ ingredient.name }}" class="ingredient-detail-image" style="width: 100%; max-height: 400px; object-fit: cover; border-radius: 6px; margin-bottom: 1.5rem;">
+            {% else %}
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQEVZcLvqNkkyI07uQmZ60Qjc3Ckqnpsr5zrMKLDoLFLkL" alt="{{ ingredient.name }}" class="ingredient-detail-image" style="width: 100%; max-height: 400px; object-fit: cover; border-radius: 6px; margin-bottom: 1.5rem;">
+            {% endif %}
+
+            <!-- Ingredient Title & Meta Info -->
+            <h1 class="ingredient-title" style="font-size: 2rem; margin-bottom: 0.5rem;">{{ ingredient.name }}</h1>
+            
+            <div class="ingredient-meta" style="display: flex; gap: 1rem; color: #64748b; font-size: 0.95rem; margin-bottom: 1.5rem;">
+                <span class="calories">🔥 {{ ingredient.calories_per_100_grams }} kcal / 100g</span>
+                {% if ingredient.category %}
+                    <span class="category">📂 {{ ingredient.category.name }}</span>
+                {% endif %}
+            </div>
+
+            <!-- Nutritional Section -->
+            <div class="ingredient-section" style="margin-bottom: 2rem;">
+                <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem; color: #1e293b;">Nutritional Information</h3>
+                <p class="ingredient-desc" style="color: #475569; line-height: 1.6;">
+                    This ingredient contains <strong>{{ ingredient.calories_per_100_grams }} calories</strong> per 100 grams.
+                </p>
+            </div>
+
+            <!-- Optional: Recipes using this ingredient (if related_name is configured) -->
+            {% if ingredient.recipes.all %}
+            <div class="ingredient-section" style="margin-bottom: 2rem;">
+                <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem; color: #1e293b;">Used in Recipes</h3>
+                <ul style="color: #475569; line-height: 1.6; padding-left: 1.2rem;">
+                    {% for recipe in ingredient.recipes.all %}
+                        <li><a href="{% url 'recipe:detail' recipe.id %}" style="color: #2563eb; text-decoration: none;">{{ recipe.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+
+            <!-- Action Buttons -->
+            <div class="ingredient-actions" style="display: flex; gap: 1rem; border-top: 1px solid #e2e8f0; padding-top: 1.5rem; margin-top: 1.5rem;">
+                <a href="{% url 'ingredient:edit' ingredient.id %}" class="btn-edit" style="background-color: #f1f5f9; color: #1e293b; padding: 0.5rem 1rem; border-radius: 6px; text-decoration: none; font-weight: 500;">Edit Ingredient</a>
+                <a href="{% url 'ingredient:delete' ingredient.id %}" class="btn-delete" style="background-color: #fee2e2; color: #dc2626; padding: 0.5rem 1rem; border-radius: 6px; text-decoration: none; font-weight: 500;">Delete Ingredient</a>
+            </div>
+
+        </article>
+
+    </div>
+</main>
+
+{% endblock %}
