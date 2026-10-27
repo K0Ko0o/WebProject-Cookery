@@ -5,6 +5,16 @@ from djangoproject.mixins import DisabledForm
 from recipes.models import Recipe
 
 
+class SearchForm(forms.Form):
+    query = forms.CharField(
+        required=False,
+        widget= forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder' : "Search by recipe name"
+        })
+
+    )
+
 class RecipeBasicForm(forms.ModelForm):
     class Meta:
         model = Recipe

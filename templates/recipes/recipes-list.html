@@ -1,4 +1,5 @@
 {% extends 'shared/base.html' %}
+{% load crispy_forms_filters %}
 
 {% block content %}
 <div class="container py-5">
@@ -10,20 +11,13 @@
         </div>
     </div>
 
-    <!-- Filter & Search Section -->
-    <div class="card shadow-sm border-0 mb-4 p-3">
-        <form method="get">
-            <div class="row g-3 align-items-center">
-                <!-- Place your filter inputs / search tags here -->
-                
-                
-                <div class="col-auto ms-auto">
-                    <button type="submit" class="btn btn-outline-primary">Filter</button>
+    <!-- Search Bar -->
+            <form class="search-form d-flex align-items-center mb-4">
+                <div class="input-group">
+                    {{ form.query}}
+                    <button type="submit" class="btn btn-danger">Search</button>
                 </div>
-            </div>
-        </form>
-    </div>
-
+            </form>
     <!-- Cards Grid -->
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
         {% for recipe in all_recipes %}

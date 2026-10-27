@@ -2,15 +2,20 @@ from django.http.request import HttpRequest
 from django.http.response import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 
-from recipes.forms import RecipeCreateForm, RecipeEditForm, RecipeDeleteForm
+from recipes.forms import RecipeCreateForm, RecipeEditForm, RecipeDeleteForm, SearchForm
 from recipes.models import Recipe
 
 
 def recipes_list_view(request: HttpRequest) -> HttpResponse:
     all_recipes = Recipe.objects.all()
+    form = SearchForm(request.GET or None)
+
+    if request.method == "GET" and form.is_valid():
+        all_recipes = all_recipes.filter(name__icontains=form.cleaned_data['query'])
 
     context = {
-        "all_recipes": all_recipes
+        "all_recipes": all_recipes,
+        'form': form,
     }
 
     return render(request, 'recipes/recipes-list.html', context)
