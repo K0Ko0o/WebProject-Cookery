@@ -68,7 +68,7 @@ def ingredients_delete_view(request: HttpRequest, pk: int) -> HttpResponse:
         'form': form
     }
 
-    return render(request, 'ingredients/ingredient-edit.html', context)
+    return render(request, 'ingredients/ingredient-delete.html', context)
 
 def ingredients_detail_view(request: HttpRequest, pk: int) -> HttpResponse:
     ingredient = get_object_or_404(Ingredient, id=pk)
