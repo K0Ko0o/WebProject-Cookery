@@ -1,9 +1,9 @@
 from django import forms
 from django.core.exceptions import ValidationError
 
-from common.models import Category
+
 from djangoproject.mixins import DisabledForm
-from recipes.models import Recipe
+from recipes.models import Recipe, Category
 
 
 class SearchForm(forms.Form):

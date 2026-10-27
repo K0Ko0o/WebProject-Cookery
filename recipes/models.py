@@ -1,7 +1,13 @@
 from django.db import models
 
-from common.models import Category
 
+class Category(models.Model):
+    name = models.CharField(
+        max_length=15
+    )
+
+    def __str__(self) -> str:
+        return self.name
 
 class Recipe(models.Model):
     name = models.CharField(
