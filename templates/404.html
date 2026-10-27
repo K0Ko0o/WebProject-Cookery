@@ -1,0 +1,38 @@
+{% extends 'shared/base.html' %}
+{% block content %}
+
+<main class="main-content">
+    <div class="container py-5 text-center">
+        
+        <!-- 404 Card Container -->
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow-sm border-0 p-5">
+                    
+                    <!-- Error Code & Icon -->
+                    <div class="mb-4">
+                        <span style="font-size: 4rem;">🍳</span>
+                        <h1 class="fw-bold display-4 mt-2 text-danger">404</h1>
+                    </div>
+
+                    <!-- Message -->
+                    <h3 class="fw-bold mb-3" style="color: #1e293b;">Page Not Found</h3>
+                    <p class="text-muted mb-4" style="line-height: 1.6;">
+                        Oops! It looks like this recipe or page got lost in the kitchen. Let's get you back on track.
+                    </p>
+
+                    <!-- Back to Home Button -->
+                    <div>
+                        <a href="{% url 'common:homepage' %}" class="btn btn-primary px-4 py-2">
+                            &larr; Back to Home
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+{% endblock %}
