@@ -11,7 +11,12 @@ def recipes_list_view(request: HttpRequest) -> HttpResponse:
     form = SearchForm(request.GET or None)
 
     if request.method == "GET" and form.is_valid():
-        all_recipes = all_recipes.filter(name__icontains=form.cleaned_data['query'])
+
+        if form.cleaned_data['query']:
+            all_recipes = all_recipes.filter(name__icontains=form.cleaned_data['query'])
+
+        if form.cleaned_data['category']:
+            all_recipes = all_recipes.filter(category=form.cleaned_data['category'])
 
     context = {
         "all_recipes": all_recipes,

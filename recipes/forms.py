@@ -1,6 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
 
+from common.models import Category
 from djangoproject.mixins import DisabledForm
 from recipes.models import Recipe
 
@@ -12,7 +13,11 @@ class SearchForm(forms.Form):
             'class': 'form-control',
             'placeholder' : "Search by recipe name"
         })
-
+    )
+    category = forms.ModelChoiceField(
+        queryset=Category.objects.all(),
+        required=False,
+        empty_label='All categories'
     )
 
 class RecipeBasicForm(forms.ModelForm):

@@ -1,5 +1,8 @@
 from django.db import models
 
+from common.models import Category
+
+
 class Recipe(models.Model):
     name = models.CharField(
         max_length=100
@@ -21,4 +24,11 @@ class Recipe(models.Model):
     )
     date_of_publication = models.DateField(
         auto_now=True
+    )
+    category = models.ForeignKey(
+        to=Category,
+        on_delete=models.CASCADE,
+        related_name='recipes',
+        null=True,
+        blank=True,
     )
